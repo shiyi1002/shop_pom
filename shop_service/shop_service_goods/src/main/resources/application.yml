@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123
+    url: jdbc:mysql:///shop1810
+    type: com.alibaba.druid.pool.DruidDataSource
+  rabbitmq:
+    username: admin
+    virtual-host: /admin
+    password: admin
+    host: 192.168.47.133
+    port: 5672
+
+dubbo:
+  application:
+    name: shop_service
+  registry:
+    address: zookeeper://192.168.47.133:2181
+  #在注册中心注册的端口
+  protocol:
+    port: 20880
+  consumer:
+    check: false
+#访问本机的端口
+server:
+  port: 9090

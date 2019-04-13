@@ -1,0 +1,23 @@
+#\u5728\u6CE8\u518C\u4E2D\u5FC3\u6CE8\u518C
+#\u914D\u7F6Esolr
+dubbo:
+  application:
+    name: service_search
+  registry:
+    address: zookeeper://192.168.47.133:2181
+  protocol:
+    port: 20886
+spring:
+  data:
+    solr:
+      host: http://192.168.47.133:8080/solr
+  rabbitmq:
+    port: 5672
+    host: 192.168.47.133
+    username: admin
+    password: admin
+    virtual-host: /admin
+server:
+  port: 9091
+
+

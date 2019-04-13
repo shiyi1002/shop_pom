@@ -1,0 +1,18 @@
+
+dubbo:
+  application:
+    name: web_item
+  registry:
+    address: zookeeper://192.168.47.133:2181
+  consumer:
+    check: false
+server:
+  port: 8083
+spring:
+  rabbitmq:
+    host: 192.168.47.133
+    username: admin
+    password: admin
+    virtual-host: /admin
+    port: 5672
+
