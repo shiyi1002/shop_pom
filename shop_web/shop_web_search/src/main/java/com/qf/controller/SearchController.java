@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * 搜索工程
+ */
 @Controller
 @RequestMapping("/goods")
 public class SearchController {
