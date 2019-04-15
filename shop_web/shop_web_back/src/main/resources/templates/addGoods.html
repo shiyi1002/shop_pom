@@ -91,7 +91,7 @@
             }
         }
 
-        //富文本编辑器
+      /*  //富文本编辑器
         var E = window.wangEditor
         var editor = new E('#div1')
         var $text1 = $('#text1')
@@ -101,7 +101,7 @@
         }
         editor.create()
         // 初始化 textarea 的值
-        $text1.val(editor.txt.html())
+        $text1.val(editor.txt.html())*/
     </script>
 
 </head>
@@ -110,7 +110,7 @@
     <div class="content-box">
         <div class="content-box-content">
             <div class="tab-content default-tab" id="tab2">
-                <div action="/goods/insert" method="post">
+                <form action="/goods/insert" method="post">
                     <fieldset>
                         <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
                         <p>
@@ -149,7 +149,7 @@
                         <p>
                             <div id="div1">
                                 <p><b>wangEditor</b><label>商品的描述</label></p>
-                            </div>
+                            </form>
                         <textarea id="text1" style="width:100%; height:200px;"  name="ginfo"></textarea>
                          </p>
                         <p>
