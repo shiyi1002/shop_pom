@@ -42,4 +42,10 @@ public class ItemController {
         template.process(map,new FileWriter(path));
         return "itemlist.ftl";
     }
+
+  @RequestMapping("/hello")
+    public String hello() {
+        return "hello";
+
+    }
 }

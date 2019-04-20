@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-    <base href="/">
+
+    <base href="/"/>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>商品详细页面</title>
     <link rel="stylesheet" href="css/base.css" type="text/css" />
@@ -12,6 +13,8 @@
     <script type="text/javascript" src="js/jquery.js" ></script>
     <script type="text/javascript" src="js/topNav.js" ></script>
     <script type="text/javascript" src="js/shop_goods.js" ></script>
+
+
 </head>
 <body>
 <!-- Header  -wll-2013/03/24 -->
@@ -509,7 +512,7 @@
             <script type="text/javascript" src="js/lib.js"></script>
             <script type="text/javascript" src="js/163css.js"></script>
             <div id="preview">
-                <div class=jqzoom id="spec-n1" onClick="window.open('/')"><IMG height="350" src="images/img04.jpg" jqimg="images/img04.jpg" width="350">
+                <div class=jqzoom id="spec-n1" onClick="window.open('/')"><IMG height="350" src="http://192.168.47.133/${images[0]}" jqimg="http://192.168.47.134/${images[0]}" width="350">
                 </div>
                 <div id="spec-n5">
                     <div class=control id="spec-left">
@@ -517,9 +520,9 @@
                     </div>
                     <div id="spec-list">
                         <ul class="list-h">
-                            <#list images as image>
-                                <li ><img src="http://192.168.47.133/${image}"> </li>
-                            </#list>
+                        <#list images as image>
+                            <li><img src="http://192.168.47.133/${image}"> </li>
+                        </#list>
                         </ul>
                     </div>
                     <div class=control id="spec-right">
@@ -578,7 +581,7 @@
                 </li>
                 <li>
                     <label>价格：</label>
-                    <span><strong>${goods.gprice}</strong>元</span>
+                    <span><strong>${goods.gprice?string("￥#,###.##")}</strong>元</span>
                 </li>
                 <li>
                     <label>运费：</label>
@@ -586,7 +589,7 @@
                 </li>
                 <li>
                     <label>库存：</label>
-                    <span>${goods.gsave}</span>
+                    <span>${goods.gsave}件</span>
                 </li>
                 <li>
                     <label>评价：</label>
@@ -598,12 +601,27 @@
                 </li>
                 <li style="padding:20px 0;">
                     <label>&nbsp;</label>
-                    <span><a href="" class="goods_sub goods_sub_gou" >加入购物车</a></span>
+                    <span> <a href="javascript:addcart()" class="goods_sub goods_sub_gou" >加入购物车</a></span>
                 </li>
             </ul>
         </div>
     </div>
     <!-- 商品展示 End -->
+    <script type="text/javascript">
+        //添加购物车
+
+        function addcart(){
+            //购买的商品id
+            var gid = ${goods.id};
+            alert(gid);
+
+            //购买的商品数量
+            var gnumber = $("#good_nums").val();
+            //添加购物车 - get
+
+            location.href = "http://localhost:8086/cart/addCart?gid=" + gid + "&gnumber=" + gnumber;
+        }
+    </script>
 
     <div class="clear mt15"></div>
     <!-- Goods Left -->
@@ -725,7 +743,7 @@
         </div>
         <div class="shop_goods_bd_xiangqing_content clearfix">
             <div id="xiangqing_content_1" class="xiangqing_contents clearfix">
-                <p>商品详情----${goods.ginfo}</p>
+                <p>${goods.ginfo}</p>
             </div>
             <div id="xiangqing_content_2" class="xiangqing_contents clearfix">
                 <p>商品评论----22222</p>
