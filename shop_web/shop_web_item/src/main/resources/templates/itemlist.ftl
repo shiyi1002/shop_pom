@@ -613,7 +613,7 @@
         function addcart(){
             //购买的商品id
             var gid = ${goods.id};
-            alert(gid);
+            //alert(gid);
 
             //购买的商品数量
             var gnumber = $("#good_nums").val();

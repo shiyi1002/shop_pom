@@ -21,7 +21,7 @@ public class SearchController {
     public String show(String keyword, Model model){
         List<Goods> goods = searchService.searchGoods(keyword);
         model.addAttribute("goods",goods);
-        System.out.println("搜索的商品为"+goods);
+
         return "searchList";
     }
 }

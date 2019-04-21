@@ -14,4 +14,5 @@ public interface ICartService {
     int insertCart(User user, ShopCart shopCart, String cartToken);
 
     List<ShopCart> queryCart(User user, String cartToken);
+    int deleteCartByUId(int uid);
 }

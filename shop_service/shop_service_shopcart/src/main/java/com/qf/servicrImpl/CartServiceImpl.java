@@ -28,7 +28,8 @@ public class CartServiceImpl implements ICartService {
 
     @Autowired
    private GoodsMapper goodsMapper;
-
+    @Autowired
+    private IGoodsService goodsService;
     @Override
     public int mergeCart(User user,String cartToken) {
         //怎么合并
@@ -40,7 +41,7 @@ public class CartServiceImpl implements ICartService {
         if(cartToken!=null){
             Long size = redisTemplate.opsForList().size(cartToken);
             List<ShopCart> cartList = redisTemplate.opsForList().range(cartToken, 0, size);
-            System.out.println("临时购物车:"+cartList);
+
             if(cartList==null){
                 return 1;
             }
@@ -71,20 +72,22 @@ public class CartServiceImpl implements ICartService {
         //判断用户是否处于登录状态
         //登录就加入数据库
 
-            Goods goods = goodsMapper.selectById(shopCart.getGid());
-            BigDecimal gnumber = BigDecimal.valueOf(shopCart.getGnumber());
-            shopCart.setAllprice(goods.getGprice().multiply(gnumber));//小计
-            if (user!=null){
-                //添加要判断这个是加的同一个商品还是不同的商品
-                //同一个商品,加数量
-                System.out.println("用户id"+user);
-                shopCart.setUid(user.getId());
-                cartMapper.insert(shopCart);
+                    Goods goods = goodsService.queryGoodsById(shopCart.getGid());
+                    BigDecimal gnumber = BigDecimal.valueOf(shopCart.getGnumber());
+                    shopCart.setAllprice(goods.getGprice().multiply(gnumber));//小计
+                    if (user!=null){
+                        //添加要判断这个是加的同一个商品还是不同的商品
+                        //同一个商品,加数量
 
-            }else{//未登录就加入redis中
-                redisTemplate.opsForList().leftPush(cartToken,shopCart);
+                        shopCart.setUid(user.getId());
+                        cartMapper.insert(shopCart);
 
-            }
+                    }else{//未登录就加入redis中
+                        redisTemplate.opsForList().leftPush(cartToken,shopCart);
+
+                    }
+
+
         return 1;
     }
 
@@ -121,8 +124,12 @@ public class CartServiceImpl implements ICartService {
         return cartList;
     }
 
-
-
-
+    @Override
+    public int deleteCartByUId(int uid) {
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.eq("uid",uid);
+       int result= cartMapper.delete(queryWrapper);
+        return result;
+    }
 
 }

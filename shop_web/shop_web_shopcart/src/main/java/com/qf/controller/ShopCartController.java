@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.aspect.ISLogin;
+import com.qf.entity.Address;
 import com.qf.entity.ShopCart;
 import com.qf.entity.User;
+import com.qf.service.IAddressService;
 import com.qf.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,6 +32,8 @@ public class ShopCartController {
     private ICartService cartService;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Reference
+    private IAddressService addressService;
     /**
      * 加入购物车
      * @return
@@ -90,6 +94,29 @@ public class ShopCartController {
         //一种是未登录的状态,查缓存redis
             return "cartShow("+ JSON.toJSONString(cartList)+")";
 
+    }
+
+    //跳转到订单页面
+    @RequestMapping("/toOrder")
+    @ISLogin(mustLogin = true)
+    public String toOrder(User user,@CookieValue(name = "cartToken",required = false) String cartToken,Model model){
+        //查购物车信息
+        List<ShopCart> cartList=cartService.queryCart(user,cartToken);
+        //总价
+        BigDecimal total=BigDecimal.valueOf(0.0);
+        for (ShopCart shopCart : cartList) {
+            total=total.add(shopCart.getAllprice());
+        }
+        model.addAttribute("total",total);
+        //查地址表
+        if(user!=null){
+            List<Address> addresses = addressService.queryAddress(user.getId());
+            model.addAttribute("addresses",addresses);
+        }
+
+        model.addAttribute("cartList",cartList);
+
+        return "ordersList";
     }
 
 
